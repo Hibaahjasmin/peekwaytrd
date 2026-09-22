@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking | {{ company.short_name if company else 'Peekway' }}</title>
+    <link rel="icon" type="image/png" sizes="192x192" href="{{ url_for('static', filename='images/peekayi.png') }}"> 
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-bg': '#F8FAFC',
+                        'brand-card': '#FFFFFF',
+                        'brand-text': '#0F172A',
+                        'brand-muted': '#64748B',
+                        'brand-green': '#059669',
+                        'brand-greenHover': '#047857',
+                        'brand-emeraldAccent': '#10B981',
+                        'brand-border': '#E2E8F0',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Alpine.js (Required for mobile menu) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        [x-cloak] { display: none !important; }
+    </style>
+</head>
+<body class="bg-brand-bg text-brand-text font-sans antialiased min-h-screen flex flex-col justify-between selection:bg-emerald-500 selection:text-white">
+
+    <!-- Sticky Header -->
+    <header class="sticky top-0 z-50 w-full backdrop-blur-xl bg-brand-bg/80 border-b border-slate-200/80 transition-all duration-300" 
+            x-data="{ mobileMenuOpen: false }"
+            data-aos="fade-down" 
+            data-aos-duration="800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex justify-between items-center">
+            
+            <!-- Brand Logo & Name -->
+            <a href="/" class="flex items-center gap-3.5 group">
+                <img src="{{ url_for('static', filename='images/peekay.png') }}" 
+                     alt="{{ company.name if company else 'Peekway' }}" 
+                     class="h-14 w-auto object-contain transform group-hover:scale-105 transition-transform duration-300">
+                
+                <div class="flex flex-col justify-center">
+                    <span class="text-2xl font-black tracking-tight leading-none text-brand-text group-hover:text-brand-green transition-colors duration-300">
+                        Peekway<span class="text-brand-green group-hover:text-brand-emeraldAccent transition-colors duration-300">.</span>
+                    </span>
+                    <span class="text-[10px] font-bold tracking-widest uppercase text-slate-400 pt-1 leading-none">
+                        Traders &amp; Scraps
+                    </span>
+                </div>
+            </a>
+
+            <!-- Minimal Desktop Navigation -->
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-bold tracking-tight">
+                <a href="/about" class="text-slate-600 hover:text-brand-green transition-colors duration-200">
+                    About
+                </a>
+                <a href="/services" class="text-slate-600 hover:text-brand-green transition-colors duration-200">
+                    Services
+                </a>
+                <a href="/appointments" class="text-brand-green transition-colors duration-200">
+                    Appointments
+                </a>
+                <a href="/contact" class="text-slate-600 hover:text-brand-green transition-colors duration-200">
+                    Contact
+                </a>
+            </nav>
+
+            <!-- Minimal CTA & Mobile Toggle -->
+            <div class="flex items-center gap-4">
+                <a href="/appointments" 
+                   class="hidden sm:inline-flex items-center bg-brand-green hover:bg-brand-greenHover text-white px-5 py-2.5 rounded-full font-bold text-xs tracking-wider uppercase shadow-md shadow-emerald-600/20 hover:shadow-lg hover:shadow-emerald-600/30 transition-all duration-200">
+                    Book now
+                </a>
+
+                <!-- Minimal Mobile Button -->
+                <button @click="mobileMenuOpen = !mobileMenuOpen" 
+                        type="button" 
+                        class="md:hidden p-2.5 rounded-xl text-slate-700 hover:text-brand-green hover:bg-slate-100 transition-all"
+                        aria-label="Toggle menu">
+                    <svg class="w-6 h-6" x-show="!mobileMenuOpen" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                    <svg class="w-6 h-6" x-show="mobileMenuOpen" x-cloak fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+
+        </div>
+
+        <!-- Simple Mobile Dropdown -->
+        <div x-show="mobileMenuOpen" 
+             x-cloak
+             x-transition:enter="transition ease-out duration-200"
+             x-transition:enter-start="opacity-0 -translate-y-2"
+             x-transition:enter-end="opacity-100 translate-y-0"
+             x-transition:leave="transition ease-in duration-150"
+             x-transition:leave-start="opacity-100 translate-y-0"
+             x-transition:leave-end="opacity-0 -translate-y-2"
+             class="md:hidden border-b border-slate-200 bg-brand-bg px-6 py-5 space-y-3 shadow-lg">
+            <a href="/about" class="block font-semibold text-slate-700 hover:text-brand-green transition-colors">About</a>
+            <a href="/services" class="block font-semibold text-slate-700 hover:text-brand-green transition-colors">Services</a>
+            <a href="/appointments" class="block font-semibold text-brand-green transition-colors">Appointments</a>
+            <a href="/contact" class="block font-semibold text-slate-700 hover:text-brand-green transition-colors">Contact</a>
+            <a href="/appointments" class="block text-center bg-brand-green text-white py-3 rounded-2xl font-bold text-xs tracking-wider uppercase mt-3 shadow-md">
+                Book now
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content Section -->
+    <main class="w-full flex-grow">
+        <!-- Flash Notifications -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+                    {% for category, message in messages %}
+                        <div class="p-4 mb-4 text-xs sm:text-sm {% if category == 'danger' %}text-red-800 bg-red-50 border-red-200{% else %}text-emerald-800 bg-emerald-50 border-emerald-200{% endif %} rounded-2xl border font-bold flex items-center justify-between shadow-sm" role="alert">
+                            <div class="flex items-center gap-2.5">
+                                <svg class="w-5 h-5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>{{ message }}</span>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <!-- Quick Summary Cards (2 Columns on Mobile, 4 on Desktop) -->
+        
+
+        <!-- Main Booking Grid -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 grid md:grid-cols-12 gap-8 lg:gap-12 items-stretch">
+            
+            <!-- Left Form Area -->
+            <div class="md:col-span-7 bg-white border border-slate-200/80 rounded-3xl p-6 sm:p-10 shadow-sm flex flex-col justify-between" data-aos="fade-right" data-aos-duration="900">
+                <div>
+                    <span class="text-[11px] font-black uppercase tracking-widest text-brand-green bg-emerald-50 px-3.5 py-1.5 rounded-full border border-emerald-200/80 inline-block mb-3">
+                        Schedule an Appointment
+                    </span>
+                    <h1 class="text-3xl sm:text-5xl font-black tracking-tight text-slate-900 leading-tight">
+                        Request a Trading Consultation
+                    </h1>
+                    <p class="text-xs sm:text-sm text-slate-500 mt-3 leading-relaxed font-normal">
+                        Complete the brief form below, and a seasoned representative will be in touch to discuss material valuation, logistics schedules, or trading services.
+                    </p>
+
+                    <form action="/book" method="POST" class="space-y-4 sm:space-y-5 mt-6 text-xs sm:text-sm">
+                        
+                    
+
+                        <!-- 2-Column Name Grid (Swaps to 2 cols on mobile) -->
+                        <div class="grid grid-cols-2 gap-3 sm:gap-4">
+                            <div class="space-y-1.5">
+                                <label class="block font-bold text-slate-700">First Name <span class="text-slate-400 font-normal">(required)</span></label>
+                                <input type="text" name="first_name" required placeholder="John" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 focus:outline-none focus:border-brand-green focus:ring-2 focus:ring-emerald-200 transition-all">
+                            </div>
+                            <div class="space-y-1.5">
+                                <label class="block font-bold text-slate-700">Last Name <span class="text-slate-400 font-normal">(required)</span></label>
+                                <input type="text" name="last_name" required placeholder="Doe" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 focus:outline-none focus:border-brand-green focus:ring-2 focus:ring-emerald-200 transition-all">
+                            </div>
+                        </div>
+
+                        <div class="space-y-1.5">
+                            <label class="block font-bold text-slate-700">Email Address <span class="text-slate-400 font-normal">(required)</span></label>
+                            <input type="email" name="email" required placeholder="john@example.com" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 focus:outline-none focus:border-brand-green focus:ring-2 focus:ring-emerald-200 transition-all">
+                        </div>
+
+                        <div class="space-y-1.5">
+                            <label class="block font-bold text-slate-700">Message &amp; Pickup Details <span class="text-slate-400 font-normal">(required)</span></label>
+                            <textarea name="message" rows="4" required placeholder="Provide details regarding your material type, quantity, or preferred meeting slot..." class="w-full bg-slate-50 border border-slate-200 rounded-2xl p-4 focus:outline-none focus:border-brand-green focus:ring-2 focus:ring-emerald-200 transition-all"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full sm:w-auto bg-brand-green hover:bg-brand-greenHover text-white font-black px-8 py-4 rounded-2xl text-xs uppercase tracking-wider transition-all duration-300 cursor-pointer shadow-md shadow-emerald-600/20 hover:shadow-lg hover:shadow-emerald-600/30">
+                            Send Booking Request ➔
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Right Image Container -->
+            <div class="md:col-span-5 h-full min-h-[420px]" data-aos="fade-left" data-aos-duration="900">
+                <div class="relative w-full h-full rounded-3xl overflow-hidden border border-slate-200/80 shadow-sm group">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=1000&q=80" 
+                         alt="Consultation Desk" 
+                         class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent flex items-end p-6 sm:p-8">
+                        <div class="text-white space-y-1">
+                            <span class="text-[10px] font-black uppercase tracking-widest text-emerald-300">Peekway Desk</span>
+                            <h4 class="text-base sm:text-lg font-bold">Trusted Recycling Partners</h4>
+                            <p class="text-xs text-slate-200">Consult directly with our logistics team.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- Footer -->
+     <footer class="relative mt-20 bg-brand-green text-white overflow-hidden border-t border-white/10 shadow-inner">
+    <!-- Ambient Inner Background Glows -->
+    <div class="absolute -top-24 -left-24 w-96 h-96 bg-white/10 rounded-full blur-[100px] pointer-events-none"></div>
+    <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-black/20 rounded-full blur-[100px] pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-12 relative z-10">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-12 pb-12 border-b border-white/15">
+            
+            <!-- Brand & Company Info Column -->
+            <div class="lg:col-span-2 space-y-4">
+                <a href="/" class="flex items-center gap-2 -ml-3 sm:-ml-4 group">
+                    <img src="{{ url_for('static', filename='images/peekay.png') }}" alt="{{ company.name }} Logo" class="h-12 sm:h-16 w-auto object-contain shrink-0 group-hover:opacity-90 transition-opacity duration-300">
+                    <span class="text-2xl sm:text-3xl font-black tracking-tight text-white group-hover:text-emerald-200 transition-colors duration-300">
+                        {{ company.name }}
+                    </span>
+                </a>
+                <p class="text-xs sm:text-sm text-white/80 leading-relaxed max-w-sm">
+                    Leading bulk scrap collection, recycling, and material trading service operating across primary industrial hubs in Kerala.
+                </p>
+                
+                <!-- Contact Details -->
+                <div class="pt-2 space-y-2.5 text-xs text-white/90">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-7 h-7 rounded-lg bg-white/15 border border-white/20 flex items-center justify-center text-emerald-200 shrink-0">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        </div>
+                        <span>Headquarters: Palakkad, Kerala</span>
+                    </div>
+                    
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-7 h-7 rounded-lg bg-white/15 border border-white/20 flex items-center justify-center text-emerald-200 shrink-0">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                        </div>
+                        <a href="tel:{{ company.mobile }}" class="hover:text-emerald-200 transition-colors font-semibold">
+                            {{ company.mobile }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Navigation Column -->
+            <div class="space-y-4">
+                <h4 class="text-xs font-extrabold uppercase tracking-widest text-emerald-200">Quick Links</h4>
+                <ul class="space-y-2.5 text-xs text-white/80">
+                    <li><a href="/" class="hover:text-white transition-colors duration-200 flex items-center gap-1.5"><span class="text-emerald-300">›</span> Home</a></li>
+                    <li><a href="/about" class="hover:text-white transition-colors duration-200 flex items-center gap-1.5"><span class="text-emerald-300">›</span> About Us</a></li>
+                    <li><a href="/services" class="hover:text-white transition-colors duration-200 flex items-center gap-1.5"><span class="text-emerald-300">›</span> Materials We Buy</a></li>
+                    <li><a href="/contact" class="hover:text-white transition-colors duration-200 flex items-center gap-1.5"><span class="text-emerald-300">›</span> Schedule Pickup</a></li>
+                </ul>
+            </div>
+
+            <!-- Service Regions Column -->
+            <div class="space-y-4">
+                <h4 class="text-xs font-extrabold uppercase tracking-widest text-emerald-200">Service Area</h4>
+                <p class="text-xs text-white/80 leading-relaxed">
+                    Fleet logistics and bulk collection available across:
+                </p>
+                <div class="flex flex-wrap gap-2 pt-1">
+                    <span class="bg-white/15 border border-white/20 text-white px-3 py-1 rounded-full text-[11px] font-semibold backdrop-blur-sm">Palakkad</span>
+                    <span class="bg-white/15 border border-white/20 text-white px-3 py-1 rounded-full text-[11px] font-semibold backdrop-blur-sm">Malappuram</span>
+                    <span class="bg-white/15 border border-white/20 text-white px-3 py-1 rounded-full text-[11px] font-semibold backdrop-blur-sm">Thrissur</span>
+                </div>
+            </div>
+
+            <!-- Connect & Social Column -->
+            <div class="space-y-4">
+                <h4 class="text-xs font-extrabold uppercase tracking-widest text-emerald-200">Get In Touch</h4>
+                <p class="text-xs text-white/80 leading-relaxed">Have inquiries regarding bulk scrap rates?</p>
+                <a href="mailto:{{ company.email }}" class="inline-block text-xs font-semibold text-white bg-black/20 hover:bg-black/30 border border-white/20 hover:border-white/40 px-4 py-2.5 rounded-xl transition-all duration-300 truncate max-w-full backdrop-blur-sm">
+                    {{ company.email }}
+                </a>
+
+                
+            </div>
+
+        </div>
+
+        <!-- Bottom Copyright Section -->
+        <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/70">
+            <p>© 2026 {{ company.name }}. All rights reserved.</p>
+            <div class="flex gap-6 font-medium">
+                <a href="/privacy" class="hover:text-white transition-colors">Privacy Policy</a>
+                <a href="/terms" class="hover:text-white transition-colors">Terms of Service</a>
+            </div>
+        </div>
+    </div>
+</footer>
+    <!-- AOS Script & Init -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ once: true });
+    </script>
+</body>
+</html>

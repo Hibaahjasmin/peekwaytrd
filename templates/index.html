@@ -1,0 +1,663 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO Meta Tags -->
+    <title>Peekway Traders & Scraps | Commodities & Scrap Management Kerala</title>
+    <meta name="description" content="Leading bulk scrap collection, sustainable material recycling, and commodities trading services in Palakkad, Thrissur, and Malappuram, Kerala.">
+    <meta name="keywords" content="scrap traders Palakkad, bulk scrap collection Kerala, commodities trading, Peekway Traders">
+    <meta name="author" content="Peekway Traders & Scraps">
+
+    <!-- OpenGraph Meta Tags (For WhatsApp, LinkedIn & Social Media previews) -->
+    <meta property="og:title" content="Peekway Traders & Scraps | Precision in Motion">
+    <meta property="og:description" content="Sophisticated commodities management and sustainable scrap trading across Kerala.">
+    <meta property="og:image" content="https://peekwaytrd.in/static/images/main.jpg">
+    <meta property="og:url" content="https://peekwaytrd.in">
+    <meta property="og:type" content="website">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="192x192" href="{{ url_for('static', filename='images/peekayi.png') }}"> 
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            bg: '#F8FAFC',           /* Light Shaded Slate Gray Background */
+                            card: '#FFFFFF',         /* Clean White Neutral Card */
+                            green: '#12884B',        /* Primary Emerald Green */
+                            greenHover: '#0e6b3b',   /* Dark Emerald Hover */
+                            emeraldAccent: '#6EE7B7',/* Vibrant Mint Emerald Accent */
+                            text: '#0F172A'          /* Deep Slate Dark Text */
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Alpine.js for Mobile Nav Interactivity -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- AOS Animation Library CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        [x-cloak] { display: none !important; }
+    </style>
+</head>
+<body class="bg-brand-bg text-brand-text flex flex-col min-h-screen font-sans antialiased selection:bg-brand-green selection:text-white">
+
+    <!-- Header Navigation -->
+    <header class="sticky top-0 z-50 w-full backdrop-blur-md bg-brand-bg/90 border-b border-slate-200/80 transition-all duration-300" 
+            x-data="{ mobileMenuOpen: false }"
+            data-aos="fade-down" 
+            data-aos-duration="800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex justify-between items-center">
+            
+            <!-- Brand Logo & Name -->
+            <a href="/" class="flex items-center gap-3 group">
+                <img src="{{ url_for('static', filename='images/peekay.png') }}" 
+                     alt="{{ company.name }}" 
+                     class="h-14 sm:h-16 w-auto object-contain transform translate-y-0.5 group-hover:scale-105 transition-transform duration-300">
+                
+                <div class="flex flex-col justify-center">
+                    <span class="text-xl sm:text-2xl font-extrabold tracking-tight leading-none text-brand-text group-hover:text-brand-green transition-colors duration-300">
+                        Peekway<span class="text-brand-green group-hover:text-brand-emeraldAccent transition-colors duration-300">.</span>
+                    </span>
+                    <span class="text-[9px] sm:text-[10px] font-bold tracking-widest uppercase text-slate-500 pt-1 leading-none">
+                        Traders &amp; Scraps
+                    </span>
+                </div>
+            </a>
+
+            <!-- Minimal Desktop Navigation -->
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold tracking-tight">
+                <a href="/about" class="text-slate-600 hover:text-brand-green transition-colors duration-200">
+                    About
+                </a>
+                <a href="/services" class="text-slate-600 hover:text-brand-green transition-colors duration-200">
+                    Services
+                </a>
+                <a href="/appointments" class="text-slate-600 hover:text-brand-green transition-colors duration-200">
+                    Appointments
+                </a>
+                <a href="/contact" class="text-slate-600 hover:text-brand-green transition-colors duration-200">
+                    Contact
+                </a>
+            </nav>
+
+            <!-- Minimal CTA & Mobile Toggle -->
+            <div class="flex items-center gap-3 sm:gap-4">
+                <a href="/appointments" 
+                   class="hidden sm:inline-flex items-center bg-brand-green hover:bg-brand-greenHover text-white px-5 py-2.5 rounded-full font-medium text-xs tracking-wider uppercase shadow-sm hover:shadow-md transition-all duration-200">
+                   Book now
+                </a>
+
+                <!-- Minimal Mobile Button -->
+                <button @click="mobileMenuOpen = !mobileMenuOpen" 
+                        type="button" 
+                        class="md:hidden p-2 text-brand-text hover:text-brand-green transition-colors"
+                        aria-label="Toggle menu">
+                    <svg class="w-6 h-6" x-show="!mobileMenuOpen" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                    <svg class="w-6 h-6" x-show="mobileMenuOpen" x-cloak fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+
+        </div>
+
+        <!-- Simple Mobile Dropdown -->
+        <div x-show="mobileMenuOpen" 
+             x-cloak
+             x-transition:enter="transition ease-out duration-150"
+             x-transition:enter-start="opacity-0 -translate-y-1"
+             x-transition:enter-end="opacity-100 translate-y-0"
+             x-transition:leave="transition ease-in duration-100"
+             x-transition:leave-start="opacity-100 translate-y-0"
+             x-transition:leave-end="opacity-0 -translate-y-1"
+             class="md:hidden border-b border-slate-200 bg-brand-bg px-6 py-4 space-y-3">
+            <a href="/about" class="block font-medium text-slate-700 hover:text-brand-green transition-colors">About</a>
+            <a href="/services" class="block font-medium text-slate-700 hover:text-brand-green transition-colors">Services</a>
+            <a href="/appointments" class="block font-medium text-slate-700 hover:text-brand-green transition-colors">Appointments</a>
+            <a href="/contact" class="block font-medium text-slate-700 hover:text-brand-green transition-colors">Contact</a>
+            <a href="/appointments" class="block text-center bg-brand-green text-white py-2.5 rounded-full font-medium text-xs tracking-wider uppercase mt-2">
+                Book now
+            </a>
+        </div>
+    </header>
+
+    <!-- Page Content -->
+    <main class="flex-grow">
+        <!-- Hero Section featuring main.jpg -->
+       <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-12 pb-16 sm:pb-20">
+            <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+                
+                <!-- Content Column -->
+                <div class="lg:col-span-6 space-y-6 sm:space-y-8" data-aos="fade-right" data-aos-duration="1000">
+                    <!-- Headline -->
+                    <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-brand-text leading-[1.08]">
+                        Precision in <span class="text-brand-green">Motion.</span>
+                    </h1>
+
+                    <!-- Paragraph -->
+                    <p class="text-sm sm:text-lg text-slate-600 max-w-lg leading-relaxed">
+                        Sophisticated commodities management and sustainable scrap trading strategies—delivering calculated confidence, trusted sourcing, and seamless operational execution.
+                    </p>
+
+                    <!-- CTA Group -->
+                    <div class="flex flex-wrap items-center gap-3 sm:gap-4 pt-2">
+                        <a href="/contact" 
+                           class="inline-flex items-center gap-2 bg-brand-green hover:bg-brand-greenHover text-white px-6 sm:px-8 py-3 sm:py-3.5 rounded-full font-semibold text-xs tracking-wider uppercase transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-0.5">
+                            <span>Book Today</span>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                            </svg>
+                        </a>
+
+                        <a href="/services" 
+                           class="inline-flex items-center px-6 sm:px-8 py-3 sm:py-3.5 rounded-full border border-slate-300 text-brand-text font-semibold text-xs tracking-wider uppercase hover:bg-slate-200/50 transition-all duration-200">
+                            Explore Services
+                        </a>
+                    </div>
+
+                    <!-- Highlights Row -->
+                    <div class="pt-6 border-t border-slate-200 grid grid-cols-2 gap-4 text-xs text-slate-500 font-medium">
+                        <div>
+                            <span class="block text-lg sm:text-xl font-extrabold text-brand-text mb-0.5">Kerala, IN</span>
+                            <span>Palakkad Operations Hub</span>
+                        </div>
+                        <div>
+                            <span class="block text-lg sm:text-xl font-extrabold text-brand-text mb-0.5">Direct Trade</span>
+                            <span>Verified Industrial Sourcing</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Showcase Image Column -->
+                <div class="lg:col-span-6" data-aos="fade-left" data-aos-duration="1000">
+                    <div class="relative mx-auto max-w-lg lg:max-w-none">
+                        <!-- Clean Image Container -->
+                        <div class="relative bg-white rounded-3xl p-3 border border-slate-200/80 shadow-lg overflow-hidden group">
+                            <img src="{{ url_for('static', filename='images/main.jpg') }}" 
+                                 alt="Peekway Main Showcase" 
+                                 class="w-full h-auto max-h-[600px] object-contain rounded-2xl transform group-hover:scale-[1.02] transition-transform duration-700 ease-out">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Materials We Buy Section -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 text-center relative overflow-hidden">
+            <!-- Decorative Background Glow -->
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-brand-green/10 blur-[120px] rounded-full pointer-events-none -z-10"></div>
+
+            <!-- Centered Header -->
+            <div class="max-w-2xl mx-auto mb-10 sm:mb-16 space-y-3 sm:space-y-4" data-aos="fade-down" data-aos-duration="800">
+                <div class="inline-flex items-center gap-2 text-brand-green text-[10px] sm:text-xs font-extrabold uppercase tracking-widest bg-brand-green/10 border border-brand-green/30 px-3 sm:px-4 py-1.5 rounded-full shadow-xs">
+                    <span class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-brand-green animate-ping"></span>
+                    Recyclable Resources
+                </div>
+                <h2 class="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight text-brand-text">
+                    Materials We Buy
+                </h2>
+                <p class="text-slate-600 text-xs sm:text-base leading-relaxed max-w-xl mx-auto font-normal">
+                    Converting industrial and commercial waste into valuable resources across Palakkad, Malappuram, and Thrissur.
+                </p>
+            </div>
+
+            <!-- Mobile: 2 Cards per row | Desktop: 4 Cards per row -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
+                
+                <!-- Card 1 -->
+                <div class="group relative bg-white p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl border border-slate-200/80 shadow-xs hover:shadow-xl hover:-translate-y-1.5 transition-all duration-500 flex flex-col justify-between text-center overflow-hidden"
+                     data-aos="fade-right" 
+                     data-aos-duration="800" 
+                     data-aos-delay="100">
+                    
+                    <div>
+                        <div class="relative w-full h-28 sm:h-48 rounded-xl sm:rounded-2xl overflow-hidden mb-3 sm:mb-6 bg-slate-100 border border-slate-200/60 shadow-inner">
+                            <img src="{{ url_for('static', filename='images/ordinary.jpg') }}" 
+                                 alt="Ordinary and Plastic Sacks" 
+                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out">
+                        </div>
+
+                        <h3 class="text-sm sm:text-xl font-bold text-brand-text mb-1 sm:mb-2.5 group-hover:text-brand-green transition-colors duration-300 leading-snug">
+                            Ordinary &amp; Plastic Sacks
+                        </h3>
+                        <p class="text-[11px] sm:text-xs text-slate-500 leading-relaxed mb-3 sm:mb-6 hidden sm:block">
+                            Specialized buying, selling, and bulk trading of used ordinary sacks and plastic sacks for over 10 years.
+                        </p>
+                    </div>
+
+                    <ul class="text-[10px] sm:text-xs text-slate-700 space-y-1.5 sm:space-y-2 font-semibold border-t border-slate-100 pt-2.5 sm:pt-4 flex flex-col items-center">
+                        <li class="flex items-center gap-1.5">
+                            <span class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-brand-green/10 text-brand-green flex items-center justify-center text-[8px] sm:text-[10px]">✓</span> 
+                            Woven Sacks
+                        </li>
+                        <li class="flex items-center gap-1.5">
+                            <span class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-brand-green/10 text-brand-green flex items-center justify-center text-[8px] sm:text-[10px]">✓</span> 
+                            Storage Bags
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="group relative bg-white p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl border border-slate-200/80 shadow-xs hover:shadow-xl hover:-translate-y-1.5 transition-all duration-500 flex flex-col justify-between text-center overflow-hidden"
+                     data-aos="fade-up" 
+                     data-aos-duration="800" 
+                     data-aos-delay="200">
+                    
+                    <div>
+                        <div class="relative w-full h-28 sm:h-48 rounded-xl sm:rounded-2xl overflow-hidden mb-3 sm:mb-6 bg-slate-100 border border-slate-200/60 shadow-inner">
+                            <img src="{{ url_for('static', filename='images/paper.jpg') }}" 
+                                 alt="Paper and Cardboard Scrap" 
+                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out">
+                        </div>
+
+                        <h3 class="text-sm sm:text-xl font-bold text-brand-text mb-1 sm:mb-2.5 group-hover:text-brand-green transition-colors duration-300 leading-snug">
+                            Paper &amp; Cardboard Scrap
+                        </h3>
+                        <p class="text-[11px] sm:text-xs text-slate-500 leading-relaxed mb-3 sm:mb-6 hidden sm:block">
+                            Bulk purchasing of cartons, corrugated boxes, and raw paper waste for paper mill reuse.
+                        </p>
+                    </div>
+
+                    <ul class="text-[10px] sm:text-xs text-slate-700 space-y-1.5 sm:space-y-2 font-semibold border-t border-slate-100 pt-2.5 sm:pt-4 flex flex-col items-center">
+                        <li class="flex items-center gap-1.5">
+                            <span class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-brand-green/10 text-brand-green flex items-center justify-center text-[8px] sm:text-[10px]">✓</span> 
+                            Corrugated Boxes
+                        </li>
+                        <li class="flex items-center gap-1.5">
+                            <span class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-brand-green/10 text-brand-green flex items-center justify-center text-[8px] sm:text-[10px]">✓</span> 
+                            Newspapers
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="group relative bg-white p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl border border-slate-200/80 shadow-xs hover:shadow-xl hover:-translate-y-1.5 transition-all duration-500 flex flex-col justify-between text-center overflow-hidden"
+                     data-aos="fade-up" 
+                     data-aos-duration="800" 
+                     data-aos-delay="300">
+                    
+                    <div>
+                        <div class="relative w-full h-28 sm:h-48 rounded-xl sm:rounded-2xl overflow-hidden mb-3 sm:mb-6 bg-slate-100 border border-slate-200/60 shadow-inner">
+                            <img src="{{ url_for('static', filename='images/office.jpg') }}" 
+                                 alt="Office and Document Scrap" 
+                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out">
+                        </div>
+
+                        <h3 class="text-sm sm:text-xl font-bold text-brand-text mb-1 sm:mb-2.5 group-hover:text-brand-green transition-colors duration-300 leading-snug">
+                            Office &amp; Document Scrap
+                        </h3>
+                        <p class="text-[11px] sm:text-xs text-slate-500 leading-relaxed mb-3 sm:mb-6 hidden sm:block">
+                            Reliable document pickup services for offices, educational institutions, shops, and warehouses.
+                        </p>
+                    </div>
+
+                    <ul class="text-[10px] sm:text-xs text-slate-700 space-y-1.5 sm:space-y-2 font-semibold border-t border-slate-100 pt-2.5 sm:pt-4 flex flex-col items-center">
+                        <li class="flex items-center gap-1.5">
+                            <span class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-brand-green/10 text-brand-green flex items-center justify-center text-[8px] sm:text-[10px]">✓</span> 
+                            Office Files
+                        </li>
+                        <li class="flex items-center gap-1.5">
+                            <span class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-brand-green/10 text-brand-green flex items-center justify-center text-[8px] sm:text-[10px]">✓</span> 
+                            Book Waste
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="group relative bg-white p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl border border-slate-200/80 shadow-xs hover:shadow-xl hover:-translate-y-1.5 transition-all duration-500 flex flex-col justify-between text-center overflow-hidden"
+                     data-aos="fade-left" 
+                     data-aos-duration="800" 
+                     data-aos-delay="400">
+                    
+                    <div>
+                        <div class="relative w-full h-28 sm:h-48 rounded-xl sm:rounded-2xl overflow-hidden mb-3 sm:mb-6 bg-slate-100 border border-slate-200/60 shadow-inner">
+                            <img src="{{ url_for('static', filename='images/factory.jpg') }}" 
+                                 alt="Factory Paper Scrap" 
+                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out">
+                        </div>
+
+                        <h3 class="text-sm sm:text-xl font-bold text-brand-text mb-1 sm:mb-2.5 group-hover:text-brand-green transition-colors duration-300 leading-snug">
+                            Factory Paper Scrap
+                        </h3>
+                        <p class="text-[11px] sm:text-xs text-slate-500 leading-relaxed mb-3 sm:mb-6 hidden sm:block">
+                            Scheduled bulk collection for manufacturing units, packing industries, and large distribution hubs.
+                        </p>
+                    </div>
+
+                    <ul class="text-[10px] sm:text-xs text-slate-700 space-y-1.5 sm:space-y-2 font-semibold border-t border-slate-100 pt-2.5 sm:pt-4 flex flex-col items-center">
+                        <li class="flex items-center gap-1.5">
+                            <span class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-brand-green/10 text-brand-green flex items-center justify-center text-[8px] sm:text-[10px]">✓</span> 
+                            Packaging Waste
+                        </li>
+                        <li class="flex items-center gap-1.5">
+                            <span class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-brand-green/10 text-brand-green flex items-center justify-center text-[8px] sm:text-[10px]">✓</span> 
+                            Paper Rolls
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Regional Logistics & Fleet Banner -->
+        <section class="bg-brand-green text-white py-16 sm:py-20 w-full shadow-inner">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+                    
+                    <!-- Left Column -->
+                    <div class="lg:col-span-7 space-y-6 sm:space-y-8 text-left" data-aos="fade-right" data-aos-duration="800">
+                        <div class="space-y-3 sm:space-y-4">
+                            <div class="inline-flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-emerald-300 animate-pulse"></span>
+                                <span class="text-white/90 text-[10px] sm:text-xs font-bold uppercase tracking-widest">Dedicated Logistics Infrastructure</span>
+                            </div>
+
+                            <h2 class="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight text-white">
+                                Equipped for Heavy-Duty Scrap Collection
+                            </h2>
+
+                            <p class="text-white/90 text-xs sm:text-base leading-relaxed max-w-2xl font-normal">
+                                Backed by our specialized transport fleet, we provide seamless, high-capacity pickup solutions for industrial, commercial, and bulk scrap across <strong class="text-white font-semibold">Palakkad, Malappuram, and Thrissur</strong>.
+                            </p>
+                        </div>
+
+                        <!-- Feature Items -->
+                        <div class="grid sm:grid-cols-2 gap-6 pt-6 border-t border-white/20">
+                            <div class="flex items-start gap-3">
+                                <div class="text-emerald-300 shrink-0 mt-0.5">
+                                    <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-sm sm:text-base font-bold text-white mb-1">3-Ton &amp; Ape Goods Fleet</h3>
+                                    <p class="text-xs text-white/80 leading-relaxed">Dedicated heavy trucks and agile pickup vehicles ready for any batch size.</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-3">
+                                <div class="text-emerald-300 shrink-0 mt-0.5">
+                                    <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-sm sm:text-base font-bold text-white mb-1">Prompt On-Demand Pickup</h3>
+                                    <p class="text-xs text-white/80 leading-relaxed">Fast turnarounds, structured loading times, and zero operational downtime.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column -->
+                    <div class="lg:col-span-5 space-y-6 sm:space-y-8" data-aos="fade-left" data-aos-duration="800" data-aos-delay="200">
+                        <div class="grid grid-cols-2 gap-4 sm:gap-6 pb-6 border-b border-white/20">
+                            <div>
+                                <span class="block text-4xl sm:text-5xl font-black text-white mb-1">10+</span>
+                                <span class="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-white/80">Years Experience</span>
+                            </div>
+                            <div>
+                                <span class="block text-4xl sm:text-5xl font-black text-white mb-1">3</span>
+                                <span class="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-white/80">Key Districts Covered</span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-3 sm:gap-4">
+                            <div class="text-emerald-300 shrink-0 mt-0.5">
+                                <svg class="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            </div>
+                            <div>
+                                <h3 class="text-base sm:text-lg font-bold text-white mb-1">Transparent Weighing Guaranteed</h3>
+                                <p class="text-xs text-white/80 leading-relaxed">Certified digital scales, on-site verification, and instant fair market payouts on every load.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Choose Peekway -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 relative overflow-hidden">
+            <!-- Ambient Background Glow -->
+            <div class="absolute top-1/3 left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-brand-green/10 blur-[120px] rounded-full pointer-events-none -z-10"></div>
+
+            <!-- Centered Header Section -->
+            <div class="text-center max-w-2xl mx-auto mb-10 sm:mb-16 space-y-3 sm:space-y-4" data-aos="fade-down" data-aos-duration="800">
+                <div class="inline-flex items-center gap-2 text-brand-green text-[10px] sm:text-xs font-extrabold uppercase tracking-widest bg-brand-green/10 border border-brand-green/30 px-3 sm:px-4 py-1.5 rounded-full shadow-xs">
+                    <span class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-brand-green animate-ping"></span>
+                    Why Partner With Us
+                </div>
+                <h2 class="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight text-brand-text">
+                    Why Choose Peekway
+                </h2>
+                <p class="text-slate-600 text-xs sm:text-base leading-relaxed font-normal">
+                    Driving circular economy goals across Kerala with seamless, reliable, and highly competitive scrap recycling solutions.
+                </p>
+            </div>
+
+            <!-- Mobile: 2 Cards per row | Desktop: 4 Cards per row -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
+                
+                <!-- Feature 1 -->
+                <div class="group relative bg-white p-4 sm:p-8 rounded-2xl sm:rounded-3xl border border-slate-200/80 shadow-xs hover:shadow-xl hover:-translate-y-1.5 transition-all duration-500 flex flex-col justify-between text-left overflow-hidden"
+                     data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
+                    
+                    <div>
+                        <div class="flex items-center justify-between mb-4 sm:mb-6">
+                            <div class="w-9 h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-brand-green/10 border border-brand-green/20 text-brand-green flex items-center justify-center group-hover:scale-110 group-hover:bg-brand-green group-hover:text-white transition-all duration-300">
+                                <svg class="w-4 h-4 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 18h12l3-18H3zm12 0V4a2 2 0 00-2-2h-2a2 2 0 00-2 2v2m-2 4h8"/></svg>
+                            </div>
+                            <span class="text-xl sm:text-3xl font-black text-slate-300 group-hover:text-brand-green/30 transition-colors duration-300">01</span>
+                        </div>
+
+                        <h3 class="text-sm sm:text-lg font-bold text-brand-text mb-1.5 sm:mb-2 group-hover:text-brand-green transition-colors duration-300">
+                            Fair Pricing
+                        </h3>
+                        <p class="text-[11px] sm:text-xs text-slate-500 leading-relaxed">
+                            Certified digital scales, real-time valuations, and instant transparent payouts for every load.
+                        </p>
+                    </div>
+
+                    <div class="pt-3 sm:pt-6 border-t border-slate-100 mt-4 sm:mt-6">
+                        <span class="inline-flex items-center gap-1 text-[9px] sm:text-[11px] font-bold text-brand-green">
+                            <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            Guaranteed Accuracy
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="group relative bg-white p-4 sm:p-8 rounded-2xl sm:rounded-3xl border border-slate-200/80 shadow-xs hover:shadow-xl hover:-translate-y-1.5 transition-all duration-500 flex flex-col justify-between text-left overflow-hidden"
+                     data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
+                    
+                    <div>
+                        <div class="flex items-center justify-between mb-4 sm:mb-6">
+                            <div class="w-9 h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-brand-green/10 border border-brand-green/20 text-brand-green flex items-center justify-center group-hover:scale-110 group-hover:bg-brand-green group-hover:text-white transition-all duration-300">
+                                <svg class="w-4 h-4 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 17a2 2 0 100 4 2 2 0 000-4zm10 0a2 2 0 100 4 2 2 0 000-4zm-8-3h8.586a1 1 0 00.707-.293l3.414-3.414A1 1 0 0019 9.586V7a1 1 0 00-1-1h-2V3a1 1 0 00-1-1H3a1 1 0 00-1 1v11a1 1 0 001 1h2m3 0h4"/></svg>
+                            </div>
+                            <span class="text-xl sm:text-3xl font-black text-slate-300 group-hover:text-brand-green/30 transition-colors duration-300">02</span>
+                        </div>
+
+                        <h3 class="text-sm sm:text-lg font-bold text-brand-text mb-1.5 sm:mb-2 group-hover:text-brand-green transition-colors duration-300">
+                            Bulk Pickup
+                        </h3>
+                        <p class="text-[11px] sm:text-xs text-slate-500 leading-relaxed">
+                            End-to-end service including labor, material sorting, loading, and transportation.
+                        </p>
+                    </div>
+
+                    <div class="pt-3 sm:pt-6 border-t border-slate-100 mt-4 sm:mt-6">
+                        <span class="inline-flex items-center gap-1 text-[9px] sm:text-[11px] font-bold text-brand-green">
+                            <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            Zero Downtime
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="group relative bg-white p-4 sm:p-8 rounded-2xl sm:rounded-3xl border border-slate-200/80 shadow-xs hover:shadow-xl hover:-translate-y-1.5 transition-all duration-500 flex flex-col justify-between text-left overflow-hidden"
+                     data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
+                    
+                    <div>
+                        <div class="flex items-center justify-between mb-4 sm:mb-6">
+                            <div class="w-9 h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-brand-green/10 border border-brand-green/20 text-brand-green flex items-center justify-center group-hover:scale-110 group-hover:bg-brand-green group-hover:text-white transition-all duration-300">
+                                <svg class="w-4 h-4 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                            </div>
+                            <span class="text-xl sm:text-3xl font-black text-slate-300 group-hover:text-brand-green/30 transition-colors duration-300">03</span>
+                        </div>
+
+                        <h3 class="text-sm sm:text-lg font-bold text-brand-text mb-1.5 sm:mb-2 group-hover:text-brand-green transition-colors duration-300">
+                            Eco Diversion
+                        </h3>
+                        <p class="text-[11px] sm:text-xs text-slate-500 leading-relaxed">
+                            Rerouting paper, cardboard, and woven sacks into production pipelines.
+                        </p>
+                    </div>
+
+                    <div class="pt-3 sm:pt-6 border-t border-slate-100 mt-4 sm:mt-6">
+                        <span class="inline-flex items-center gap-1 text-[9px] sm:text-[11px] font-bold text-brand-green">
+                            <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            Circular Integration
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="group relative bg-white p-4 sm:p-8 rounded-2xl sm:rounded-3xl border border-slate-200/80 shadow-xs hover:shadow-xl hover:-translate-y-1.5 transition-all duration-500 flex flex-col justify-between text-left overflow-hidden"
+                     data-aos="fade-up" data-aos-duration="800" data-aos-delay="400">
+                    
+                    <div>
+                        <div class="flex items-center justify-between mb-4 sm:mb-6">
+                            <div class="w-9 h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-brand-green/10 border border-brand-green/20 text-brand-green flex items-center justify-center group-hover:scale-110 group-hover:bg-brand-green group-hover:text-white transition-all duration-300">
+                                <svg class="w-4 h-4 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                            </div>
+                            <span class="text-xl sm:text-3xl font-black text-slate-300 group-hover:text-brand-green/30 transition-colors duration-300">04</span>
+                        </div>
+
+                        <h3 class="text-sm sm:text-lg font-bold text-brand-text mb-1.5 sm:mb-2 group-hover:text-brand-green transition-colors duration-300">
+                            Secure Disposal
+                        </h3>
+                        <p class="text-[11px] sm:text-xs text-slate-500 leading-relaxed">
+                            Confidential disposal for office records and customized collection schedules.
+                        </p>
+                    </div>
+
+                    <div class="pt-3 sm:pt-6 border-t border-slate-100 mt-4 sm:mt-6">
+                        <span class="inline-flex items-center gap-1 text-[9px] sm:text-[11px] font-bold text-brand-green">
+                            <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            Strict Confidentiality
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+   <footer class="relative mt-20 bg-brand-green text-white overflow-hidden border-t border-white/10 shadow-inner">
+    <!-- Ambient Inner Background Glows -->
+    <div class="absolute -top-24 -left-24 w-96 h-96 bg-white/10 rounded-full blur-[100px] pointer-events-none"></div>
+    <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-black/20 rounded-full blur-[100px] pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-12 relative z-10">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-12 pb-12 border-b border-white/15">
+            
+            <!-- Brand & Company Info Column -->
+            <div class="lg:col-span-2 space-y-4">
+                <a href="/" class="flex items-center gap-2 -ml-3 sm:-ml-4 group">
+                    <img src="{{ url_for('static', filename='images/peekay.png') }}" alt="{{ company.name }} Logo" class="h-12 sm:h-16 w-auto object-contain shrink-0 group-hover:opacity-90 transition-opacity duration-300">
+                    <span class="text-2xl sm:text-3xl font-black tracking-tight text-white group-hover:text-emerald-200 transition-colors duration-300">
+                        {{ company.name }}
+                    </span>
+                </a>
+                <p class="text-xs sm:text-sm text-white/80 leading-relaxed max-w-sm">
+                    Leading bulk scrap collection, recycling, and material trading service operating across primary industrial hubs in Kerala.
+                </p>
+                
+                <!-- Contact Details -->
+                <div class="pt-2 space-y-2.5 text-xs text-white/90">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-7 h-7 rounded-lg bg-white/15 border border-white/20 flex items-center justify-center text-emerald-200 shrink-0">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        </div>
+                        <span>Headquarters: Palakkad, Kerala</span>
+                    </div>
+                    
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-7 h-7 rounded-lg bg-white/15 border border-white/20 flex items-center justify-center text-emerald-200 shrink-0">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                        </div>
+                        <a href="tel:{{ company.mobile }}" class="hover:text-emerald-200 transition-colors font-semibold">
+                            {{ company.mobile }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Navigation Column -->
+            <div class="space-y-4">
+                <h4 class="text-xs font-extrabold uppercase tracking-widest text-emerald-200">Quick Links</h4>
+                <ul class="space-y-2.5 text-xs text-white/80">
+                    <li><a href="/" class="hover:text-white transition-colors duration-200 flex items-center gap-1.5"><span class="text-emerald-300">›</span> Home</a></li>
+                    <li><a href="/about" class="hover:text-white transition-colors duration-200 flex items-center gap-1.5"><span class="text-emerald-300">›</span> About Us</a></li>
+                    <li><a href="/services" class="hover:text-white transition-colors duration-200 flex items-center gap-1.5"><span class="text-emerald-300">›</span> Materials We Buy</a></li>
+                    <li><a href="/contact" class="hover:text-white transition-colors duration-200 flex items-center gap-1.5"><span class="text-emerald-300">›</span> Schedule Pickup</a></li>
+                </ul>
+            </div>
+
+            <!-- Service Regions Column -->
+            <div class="space-y-4">
+                <h4 class="text-xs font-extrabold uppercase tracking-widest text-emerald-200">Service Area</h4>
+                <p class="text-xs text-white/80 leading-relaxed">
+                    Fleet logistics and bulk collection available across:
+                </p>
+                <div class="flex flex-wrap gap-2 pt-1">
+                    <span class="bg-white/15 border border-white/20 text-white px-3 py-1 rounded-full text-[11px] font-semibold backdrop-blur-sm">Palakkad</span>
+                    <span class="bg-white/15 border border-white/20 text-white px-3 py-1 rounded-full text-[11px] font-semibold backdrop-blur-sm">Malappuram</span>
+                    <span class="bg-white/15 border border-white/20 text-white px-3 py-1 rounded-full text-[11px] font-semibold backdrop-blur-sm">Thrissur</span>
+                </div>
+            </div>
+
+            <!-- Connect & Social Column -->
+            <div class="space-y-4">
+                <h4 class="text-xs font-extrabold uppercase tracking-widest text-emerald-200">Get In Touch</h4>
+                <p class="text-xs text-white/80 leading-relaxed">Have inquiries regarding bulk scrap rates?</p>
+                <a href="mailto:{{ company.email }}" class="inline-block text-xs font-semibold text-white bg-black/20 hover:bg-black/30 border border-white/20 hover:border-white/40 px-4 py-2.5 rounded-xl transition-all duration-300 truncate max-w-full backdrop-blur-sm">
+                    {{ company.email }}
+                </a>
+
+                
+            </div>
+
+        </div>
+
+        <!-- Bottom Copyright Section -->
+        <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/70">
+            <p>© 2026 {{ company.name }}. All rights reserved.</p>
+            <div class="flex gap-6 font-medium">
+                <a href="/privacy" class="hover:text-white transition-colors">Privacy Policy</a>
+                <a href="/terms" class="hover:text-white transition-colors">Terms of Service</a>
+            </div>
+        </div>
+    </div>
+</footer>
+    <!-- AOS JS for Entrance Animations -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 900,
+            once: true,
+            easing: 'ease-out-cubic'
+        });
+    </script>
+</body>
+</html>
